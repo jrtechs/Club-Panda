@@ -1,0 +1,285 @@
+<script>
+    
+    window.onload = function()
+    {
+        var canvas = document.getElementById("canvas");
+        
+        var c = canvas.getContext('2d');
+        
+        c.fillStyle= "black";
+        
+        c.fillRect(0,0, canvas.width, canvas.height);
+    };
+    
+    
+    //entire game
+    function play()
+    {
+        var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) 
+        {
+            window.setTimeout(callback, 1000 / 60)
+        };
+        
+        
+        var canvas = document.getElementById("canvas");
+        
+        var width = 700;
+        
+        var height = 700;
+        
+        canvas.style.textAligh = 'center';
+        
+        var context = canvas.getContext('2d');
+        
+        
+        
+        var keysDown = {};
+        
+        
+        
+        //player variables;
+        var score = 0;
+        var alive = true;
+        
+        //usefull function
+        function getRandomIntInclusive(min, max)
+        {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        
+        //objects
+        
+        var Player = function(x,y)
+        {
+            this.x = 350
+            this.y = 650;
+            
+            this.width = 10;
+            this.height = 10;
+            
+            this.speed = 6;
+            
+            this.facing = 40;
+            
+            this.updateDirection = function(key)
+            {
+                facing = key;
+            }
+            
+            this.render = function()
+            {
+                context.fillStyle = "rgba(255, 255, 255, 1)"; //white
+                context.fillRect(this.x, this.y, this.width, this.height);
+                
+            }
+            
+            this.move = function()
+            {
+                for (var key in keysDown)
+                {
+                    var value = Number(key);
+                    
+                    if(value == 37) //left
+                    {
+                        this.x = this.x - this.speed;
+                    }
+                    else if(value == 39)
+                    {
+                        this.x = this.x + this.speed;
+                    }
+                    
+                }
+                
+                //collisions
+                for(i = 0; i < bamboos.length; i++)
+                {
+                    if(bamboos[i] != -1)
+                    {
+                        bb = bamboos[i];
+                        if(Math.abs(bb.x - p.x) <= bb.width)
+                        {
+                            if(p.y > bb.y && p.y < bb.y + bb.height || p.y + p.height < bb.y + bb.height && p.y + p.height > bb.y)
+                            {
+                                alive = false;
+                                
+                                bb = -1;
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        //player object
+        var p = new Player(350, 850);
+        
+        
+        //object that falls from the sky
+        var Bamboo = function()
+        {
+            this.x = getRandomIntInclusive(0, width);
+            this.y = 0;
+            
+            this.width = 25;
+            this.height = 75;
+            
+            this.speed = 4;
+            
+            
+            this.render = function()
+            {
+                context.fillStyle = "rgba(0, 255, 0 , 1)"; //green
+                context.fillRect(this.x, this.y, this.width, this.height);
+                
+            }
+            
+            this.move = function()
+            {
+                this.y += this.speed;
+                
+                if(this.y> height)
+                {
+                    //remove bamboo from array
+                    score++;
+                    return true;
+                    
+                }
+            }
+            
+        }
+        var bamboos = [];
+        
+        //draws all the objects
+        var render = function()
+        {
+            
+            context.fillStyle = "rgba(0, 0,0 ,1)";
+            context.fillRect(0,0, width, height);
+            
+            context.fillStyle = "rgba(255, 255,255 ,1)";
+            context.font = "20px Georgia";
+            context.fillText("Score: " + score, 10, 25);
+            
+            
+            p.render();
+            for(i= 0; i < bamboos.length; i++)
+            {
+                
+                if(bamboos[i] != -1)
+                {
+                    bamboos[i].render();
+                }
+                
+            }
+            //console.log('render was called');
+            
+            //context.fillStyle = "rgba(0, 128, 0 ,1)"; //green
+            //context.fillRect(0, 0, 700, 700);
+            
+            //console.log(context); 
+        }
+        
+        
+        var update = function()
+        {
+            addBamboo();
+            
+            p.move();
+            
+            for (i = 0; i< bamboos.length; i++)
+            {
+                if(bamboos[i] != -1)
+                {
+                    if(bamboos[i].move())
+                    {
+                        bamboos[i] = -1;
+                    }
+                }
+            }
+            
+            addBamboo();
+        }
+        
+        var count = 0;
+        var limit = 30;
+        var addBamboo = function()
+        {
+            count++;
+            
+            if(count == limit)
+            {
+                count = 0;
+                
+                var bnew = true;
+                
+                for(i = 0; i < bamboos.length; i++)
+                {
+                    if(bamboos[i] == -1)
+                    {
+                        bamboos[i] = new Bamboo();
+                        bnew = false;
+                    }
+                }
+                
+                if(bnew)
+                {
+                   bamboos.push(new Bamboo()); 
+                }
+                
+                
+                
+                if(limit > 10)
+                {
+                    limit --;
+                }
+            }
+        }
+        
+        var tic = function()
+        {
+            //console.log('tic was called');
+            
+            if(alive)
+            {
+                update();
+                render();
+            }
+            else
+            {
+                context.fillStyle = "rgba(0, 0,0 ,1)";
+                context.fillRect(0,0, width, height);
+
+                context.fillStyle = "rgba(255, 255,255 ,1)";
+                context.font = "20px Georgia";
+                context.fillText("You died with a score of: " + score, 250, 325);
+            }
+            animate(tic);    
+        }
+        
+        window.addEventListener("keydown", function (event) 
+        {
+            if(event.keyCode >=37 && event.keyCode <=40)
+            {
+                p.facing = event.keyCode;
+            }
+
+            keysDown[event.keyCode] = true;
+        });
+
+        window.addEventListener("keyup", function (event) 
+        {
+            delete keysDown[event.keyCode];
+        });
+        //tic();
+        animate(tic);
+        
+    }
+    
+</script>
+<div><canvas id="canvas" width="700" height="700"></canvas></div>
+<div><input type="submit" name="play" value="Play Game" onclick="this.blur();play()"/></div>
