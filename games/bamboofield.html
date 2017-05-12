@@ -61,7 +61,7 @@
             this.width = 10;
             this.height = 10;
             
-            this.speed = 6;
+            this.speed = 4;
             
             this.facing = 40;
             
@@ -100,7 +100,8 @@
                     if(bamboos[i] != -1)
                     {
                         bb = bamboos[i];
-                        if(Math.abs(bb.x - p.x) <= bb.width)
+                        //if(Math.abs(bb.x - p.x) <= bb.width)
+                        if(p.x > bb.x && p.x < bb.x + bb.width || p.x + p.width < bb.x + bb.width && p.x + p.width > bb.x)
                         {
                             if(p.y > bb.y && p.y < bb.y + bb.height || p.y + p.height < bb.y + bb.height && p.y + p.height > bb.y)
                             {
