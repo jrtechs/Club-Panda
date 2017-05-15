@@ -113,6 +113,15 @@
                     }
                 }
                 
+                if(this.x < 0)
+                {
+                    this.x += this.speed;
+                }
+                else if(this.x > width)
+                {
+                    this.x -= this.speed;
+                }
+                
             }
         }
         
@@ -123,11 +132,14 @@
         //object that falls from the sky
         var Bamboo = function()
         {
-            this.x = getRandomIntInclusive(0, width);
-            this.y = 0;
             
             this.width = 25;
             this.height = 75;
+            
+            
+            
+            this.x = getRandomIntInclusive(0, width);
+            this.y = -this.height;
             
             this.speed = 4;
             
@@ -207,7 +219,7 @@
         }
         
         var count = 0;
-        var limit = 30;
+        var limit = 25;
         var addBamboo = function()
         {
             count++;
