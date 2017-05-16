@@ -270,6 +270,14 @@
                 context.fillStyle = "rgba(255, 255,255 ,1)";
                 context.font = "20px Georgia";
                 context.fillText("You died with a score of: " + score, 250, 325);
+                
+                
+                document.body.innerHTML += '<form id="dynForm" action="insertScore.php" method="post">\n\
+                <input type="hidden" name="game_new_score" value=true>\n\
+                <input type="hidden" name="game" value="1">\n\
+                <input type="hidden" name="user_id_score" value=" ' + <?php $_SESSION['user_id'] ?> + ' ">\n\
+                <input type="hidden" name="score_validate" value="' + score + '"></form>';
+                document.getElementById("dynForm").submit();
             }
             animate(tic);    
         }

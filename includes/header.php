@@ -39,6 +39,15 @@
         }
     }
     
+    
+    try
+    {
+        include('games/insertScore.php');
+    } 
+    catch (Exception $ex) 
+    {
+
+    }
 
     echo '<!DOCTYPE html>
     <html>
