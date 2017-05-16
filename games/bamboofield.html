@@ -2,18 +2,18 @@
     
     window.onload = function()
     {
-        var canvas = document.getElementById("canvas");
+        var canvasBFc = document.getElementById("canvasBF");
         
-        var c = canvas.getContext('2d');
+        var c = canvasBFc.getContext('2d');
         
         c.fillStyle= "black";
         
-        c.fillRect(0,0, canvas.width, canvas.height);
+        c.fillRect(0,0, canvasBFc.width, canvasBFc.height);
     };
     
     
     //entire game
-    function play()
+    function playBF()
     {
         var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) 
         {
@@ -21,15 +21,15 @@
         };
         
         
-        var canvas = document.getElementById("canvas");
+        var canvasBFc = document.getElementById("canvasBF");
         
         var width = 700;
         
         var height = 700;
         
-        canvas.style.textAligh = 'center';
+        canvasBFc.style.textAligh = 'center';
         
-        var context = canvas.getContext('2d');
+        var context = canvasBFc.getContext('2d');
         
         
         
@@ -294,5 +294,5 @@
     }
     
 </script>
-<div><canvas id="canvas" width="700" height="700"></canvas></div>
-<div><input type="submit" name="play" value="Play Game" onclick="this.blur();play()"/></div>
+<div><canvas id="canvasBF" width="700" height="700"></canvas></div>
+<div><input type="submit" name="play" value="Play Game" onclick="this.blur();playBF()"/></div>

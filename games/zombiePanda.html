@@ -1,18 +1,18 @@
 <script>
     window.onload = function()
     {
-        var canvas = document.getElementById("canvas");
+        var canvas = document.getElementById("canvasZP");
         var c = canvas.getContext('2d');
         c.fillStyle= "black";
         c.fillRect(0,0,canvas.width,canvas.height);
     };
-    function play()
+    function playZP()
     {
 
         var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
             window.setTimeout(callback, 1000 / 60)
         };
-        var canvas = document.getElementById("canvas");
+        var canvas = document.getElementById("canvasZP");
         var width = 700;
         var height = 700;
         canvas.style.textAlign = 'center';
@@ -349,7 +349,6 @@
             animate(tic);
         }
 
-
         window.addEventListener("keydown", function (event) 
         {
             if(event.keyCode >=37 && event.keyCode <=40)
@@ -372,5 +371,7 @@
 
 </script>
 
-<div><input type="submit" name="play" value="Play Game" onclick="this.blur();play()"/></div>
-<div><canvas id="canvas" width="700" height="700"></canvas></div>
+
+
+<div><canvas id="canvasZP" width="700" height="700"></canvas></div>
+<div><input type="submit" name="play" value="Play Game" onclick="this.blur();playZP()"/></div>

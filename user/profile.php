@@ -1,6 +1,5 @@
 <?php
 
-    //ini_set('display_errors', 1);
     $errors = array();
     
     if(isset($_POST['logout']))

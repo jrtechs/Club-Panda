@@ -68,7 +68,7 @@
             <i class="fa fa-remove"></i>
           </a>
           <a href="bamboofield.php" class="w3-bar-item w3-button">Bamboo Field</a>
-          <a href="#" class="w3-bar-item w3-button">Link 2</a>
+          <a href="zombiePanda.php" class="w3-bar-item w3-button">Zombie Pandas</a>
           <a href="#" class="w3-bar-item w3-button">Link 3</a>
           <a href="#" class="w3-bar-item w3-button">Link 4</a>
           <a href="#" class="w3-bar-item w3-button">Link 5</a>
@@ -85,7 +85,7 @@
             <button class="w3-button" title="Notifications">Games<i class="fa fa-caret-down"></i></button>     
             <div class="w3-dropdown-content w3-card-4 w3-bar-block">
               <a href="bamboofield.php" class="w3-bar-item w3-button">Bamboo Field</a>
-              <a href="#" class="w3-bar-item w3-button">Link</a>
+              <a href="zombiePanda.php" class="w3-bar-item w3-button">Zombie Pandas</a>
               <a href="#" class="w3-bar-item w3-button">Link</a>
             </div>
           </div>
@@ -127,7 +127,7 @@
         <i class="fa fa-remove"></i>
       </a>
       <a href="games/bamboofield.php" class="w3-bar-item w3-button">Bamboo Field</a>
-      <a href="#" class="w3-bar-item w3-button">Link 2</a>
+      <a href="games/zombiePanda.php" class="w3-bar-item w3-button">Zombie Pandas</a>
       <a href="#" class="w3-bar-item w3-button">Link 3</a>
       <a href="#" class="w3-bar-item w3-button">Link 4</a>
       <a href="#" class="w3-bar-item w3-button">Link 5</a>
@@ -144,7 +144,7 @@
         <button class="w3-button" title="Notifications">Games<i class="fa fa-caret-down"></i></button>     
         <div class="w3-dropdown-content w3-card-4 w3-bar-block">
           <a href="games/bamboofield.php" class="w3-bar-item w3-button">Bamboo Field</a>
-          <a href="#" class="w3-bar-item w3-button">Link</a>
+          <a href="games/zombiePanda.php" class="w3-bar-item w3-button">Zombie Pandas</a>
           <a href="#" class="w3-bar-item w3-button">Link</a>
         </div>
       </div>
