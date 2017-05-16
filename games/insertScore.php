@@ -12,9 +12,12 @@
         
         $q = "insert into scores(game, user_id, score) values('$i_game','$i_user_id','$i_score')";
         
-        $r = mysqli_query($dbc, $q);
+        echo '<h1>' . $q . '</h1>';
         
-        echo("<meta http-equiv='refresh' content='1'>");
+        $r = mysqli_query($dbc, $q);
+       
+        
+        //echo("<meta http-equiv='refresh' content='1'>");
         
     }
 
