@@ -12,7 +12,7 @@
         
         
         //new game or something
-        include 'games/bamboofield.html';
+        //include 'games/bamboofield.html';
         
         echo '</div><div class="w3-half w3-container">';
         //profile
@@ -42,7 +42,7 @@
     echo '</div></div>';
     
     echo '<div class="w3-half w3-container"><div id="repo1">';
-    include('games/bamboofield.html');
+    //include('games/bamboofield.html');
     echo '</div></div></div>';
     
     include 'includes/footer.php';

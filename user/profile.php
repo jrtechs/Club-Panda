@@ -8,7 +8,14 @@
         
         echo '<h3>You are now logged out</h3>';
         
-        echo("<meta http-equiv='refresh' content='1'>");
+        if($dir == 2)
+        {
+            header("Location: ../index.php");
+        }
+        else
+        {
+            header("Location: index.php");
+        }
     }
 
     if(isset($_POST['log_in']))
@@ -70,8 +77,15 @@
                         $_SESSION['username'] = $row['user_name'];
                         $_SESSION['agent'] = md5($_SERVER['HTTP_USERAGENT'] . 'salt');
                         
+                        if($dir == 2)
+                        {
+                            header("Location: ../index.php");
+                        }
+                        else
+                        {
+                            header("Location: index.php");
+                        }
                         
-                        header("Location: index.php");
                     }
                 }
                 else
@@ -106,17 +120,39 @@
     {
         echo '<h3 class="w3-center">Welcome ' . $_SESSION['fname'] . '</h3>';
         
-        echo '<form action="index.php" method ="post">
+        if($dir == 2)
+        {
+            echo '<form action="../index.php" method ="post">
             <input class="w3-padding-16 w3-hover-dark-grey w3-btn-block w3-center-align" type="submit" name ="logout" value="logout" />
             <input type="hidden" name="logout" value="TRUE" />
             </form>';
+        }
+        else
+        {
+            echo '<form action="index.php" method ="post">
+            <input class="w3-padding-16 w3-hover-dark-grey w3-btn-block w3-center-align" type="submit" name ="logout" value="logout" />
+            <input type="hidden" name="logout" value="TRUE" />
+            </form>';
+        }
+        
+
         
     }
     else 
     {
         //prints login form
         
-        echo '<form action ="index.php" method ="post">
+        
+        if($dir == 2)
+        {
+            echo '<form action ="../index.php" method ="post">';
+        }
+        else
+        {
+            echo '<form action ="index.php" method ="post">';
+        }
+        
+        echo '
             <div class="w3-group">
             <input class="w3-input" type="text" value="" name="user_name" class="w3-container w3-card-4" required/>
             <label class="w3-label w3-validate">User Name</label>

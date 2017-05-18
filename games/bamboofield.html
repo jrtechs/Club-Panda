@@ -253,6 +253,8 @@
             }
         }
         
+        var sent;
+        
         var tic = function()
         {
             //console.log('tic was called');
@@ -264,16 +266,22 @@
             }
             else
             {
-                context.fillStyle = "rgba(0, 0,0 ,1)";
-                context.fillRect(0,0, width, height);
+                if(!sent)
+                {
+                    context.fillStyle = "rgba(0, 0,0 ,1)";
+                    context.fillRect(0,0, width, height);
 
-                context.fillStyle = "rgba(255, 255,255 ,1)";
-                context.font = "20px Georgia";
-                context.fillText("You died with a score of: " + score, 250, 325);
+                    context.fillStyle = "rgba(255, 255,255 ,1)";
+                    context.font = "20px Georgia";
+                    context.fillText("You died with a score of: " + score, 250, 325);
+
+
+                    document.body.innerHTML += '<form id="dynForm" action="insertScore.php" method="post"><input type="hidden" name="game_new_score" value=true><input type="hidden" name="game" value=1><input type="hidden" name="user_id_score" value=<?php echo $_SESSION['user_id']; ?>><input type="hidden" name="score_validate" value=' + score + '></form>';
+                    document.getElementById("dynForm").submit();
+                    
+                    sent = true;
+                }
                 
-                
-                document.body.innerHTML += '<form id="dynForm" action="games/insertScore.php" method="post"><input type="hidden" name="game_new_score" value=true><input type="hidden" name="game" value=1><input type="hidden" name="user_id_score" value=<?php echo $_SESSION['user_id']; ?>><input type="hidden" name="score_validate" value=' + score + '></form>';
-                document.getElementById("dynForm").submit();
             }
             animate(tic);    
         }
