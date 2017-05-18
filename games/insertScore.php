@@ -32,6 +32,11 @@
             header("Location: bamboofield.php");
         }
         
+        else if($i_game == 2)
+        {
+            header("Location: zombiePanda.php");
+        }
+        
     }
 
 ?>

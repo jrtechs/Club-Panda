@@ -6,7 +6,7 @@
     {
         echo '<h1 class="w3-text-teal"><center>User\'s Personal Records</center></h1>';
 
-        $q = "select * from scores where user_id='" . $_SESSION['user_id'] . "' order by score desc limit 20";
+        $q = "select * from scores where user_id='" . $_SESSION['user_id'] . "' and game='$game_id' order by score desc limit 20";
         $r = mysqli_query($dbc, $q);
         echo '<div class="w3-responsive w3-card-4"><table class="w3-table w3-striped w3-bordered"><thead>';
         echo '<tr class="w3-theme">

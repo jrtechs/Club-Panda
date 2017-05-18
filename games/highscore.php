@@ -4,7 +4,7 @@
 
     echo '<h1 class="w3-text-teal"><center>High Scores</center></h1>';
 
-    $q = "select * from scores order by score desc limit 20";
+    $q = "select * from scores where game = '$game_id' order by score desc limit 20";
     $r = mysqli_query($dbc, $q);
     echo '<div class="w3-responsive w3-card-4"><table class="w3-table w3-striped w3-bordered"><thead>';
     echo '<tr class="w3-theme">

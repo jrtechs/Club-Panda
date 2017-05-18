@@ -1,6 +1,9 @@
 <?php
 
     $dir = 2;
+    
+    //used for high score
+    $game_id = 1;
 
     //ini_set('display_errors', 1);
     include '../includes/header.php';

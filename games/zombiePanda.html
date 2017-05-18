@@ -1,4 +1,14 @@
 <script>
+    
+    window.addEventListener("keydown", function(e) 
+    {
+        // space and arrow keys
+        if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) 
+        {
+            e.preventDefault();
+        }
+    }, false);
+    
     window.onload = function()
     {
         var canvas = document.getElementById("canvasZP");
@@ -9,7 +19,8 @@
     function playZP()
     {
 
-        var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+        var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) 
+        {
             window.setTimeout(callback, 1000 / 60)
         };
         var canvas = document.getElementById("canvasZP");
@@ -324,8 +335,8 @@
 
 
 
-
-
+        var sent = false;
+        
         var tic = function()
         {
             if(dead)
@@ -338,6 +349,14 @@
                 context.fillStyle = "rgba(255, 255, 255, 1)"; //green
                 context.font= "20px Georgia";
                 context.fillText("You died with a score of " + score,200,340);
+                
+                if(!sent)
+                {
+                    document.body.innerHTML += '<form id="dynForm" action="insertScore.php" method="post"><input type="hidden" name="game_new_score" value=true><input type="hidden" name="game" value=2><input type="hidden" name="user_id_score" value=<?php echo $_SESSION['user_id']; ?>><input type="hidden" name="score_validate" value=' + score + '></form>';
+                    document.getElementById("dynForm").submit();
+                    sent = !sent;
+                }
+                
 
             }
             else
