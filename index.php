@@ -42,7 +42,10 @@
     echo '</div></div>';
     
     echo '<div class="w3-half w3-container"><div id="repo1">';
-    //include('games/bamboofield.html');
+    echo '<script src="RepoJS/repo.js"></script>
+    <script>
+    $(\'#repo1\').repo({ user: \'jrtechs\', name: \'Panda-Quotes\' });
+    </script>';
     echo '</div></div></div>';
     
     include 'includes/footer.php';

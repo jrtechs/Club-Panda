@@ -12,6 +12,8 @@
         <td>User Name</td>
         <td>Score</td>
         </tr></thead><tbody>';
+    
+    
     $rank = 0;
     while($row = mysqli_fetch_array($r))
     {
