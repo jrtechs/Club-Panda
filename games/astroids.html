@@ -1,0 +1,325 @@
+<script>
+    
+    //5-25-17
+    
+    window.addEventListener("keydown", function(e) 
+    {
+        // space and arrow keys
+        if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) 
+        {
+            e.preventDefault();
+        }
+    }, false);
+    
+    window.onload = function()
+    {
+        var canvas = document.getElementById("canvas");
+        
+        var c = canvas.getContext('2d');
+        
+        c.fillStyle= "black";
+        
+        c.fillRect(0,0, canvas.width, canvas.height);
+    };
+    
+    
+    //entire game
+    function playBF()
+    {
+        var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) 
+        {
+            window.setTimeout(callback, 1000 / 60)
+        };
+        
+        
+        var canvas = document.getElementById("canvas");
+        
+        var width = 700;
+        
+        var height = 700;
+        
+        canvas.style.textAligh = 'center';
+        
+        var context = canvas.getContext('2d');
+        
+        
+        
+        var keysDown = {};
+        
+        
+        
+        //player variables;
+        var score = 0;
+        var alive = true;
+        
+        //usefull function
+        function getRandomIntInclusive(min, max)
+        {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        
+        //objects
+        
+        var Player = function(x,y)
+        {
+            this.x = 350
+            this.y = 650;
+            
+            this.width = 10;
+            this.height = 10;
+            
+            this.speed = 4;
+            
+            this.facing = 40;
+            
+            this.updateDirection = function(key)
+            {
+                facing = key;
+            }
+            
+            this.render = function()
+            {
+                context.fillStyle = "rgba(255, 255, 255, 1)"; //white
+                context.fillRect(this.x, this.y, this.width, this.height);
+                
+            }
+            
+            this.move = function()
+            {
+                for (var key in keysDown)
+                {
+                    var value = Number(key);
+                    
+                    if(value == 37) //left
+                    {
+                        this.x = this.x - this.speed;
+                    }
+                    else if(value == 39)
+                    {
+                        this.x = this.x + this.speed;
+                    }
+                    
+                }
+                
+                //collisions
+                for(i = 0; i < astroids.length; i++)
+                {
+                    if(astroids[i] != -1)
+                    {
+                        bb = astroids[i];
+                        //if(Math.abs(bb.x - p.x) <= bb.width)
+                        if(p.x > bb.x && p.x < bb.x + bb.width || p.x + p.width < bb.x + bb.width && p.x + p.width > bb.x)
+                        {
+                            if(p.y > bb.y && p.y < bb.y + bb.height || p.y + p.height < bb.y + bb.height && p.y + p.height > bb.y)
+                            {
+                                alive = false;
+                                
+                                bb = -1;
+                            }
+                        }
+                    }
+                }
+                
+                if(this.x < 0)
+                {
+                    this.x += this.speed;
+                }
+                else if(this.x > width)
+                {
+                    this.x -= this.speed;
+                }
+                
+            }
+        }
+        
+        //player object
+        var p = new Player(350, 850);
+        
+        
+        //object that falls from the sky
+        var Astroid = function(size)
+        {
+            
+            this.width = 25;
+            this.height = 25;
+            
+            this.dir = getRandomIntInclusive(0, 360);
+            
+            this.size = size;
+            
+            
+            this.x = getRandomIntInclusive(0, width);
+            this.y = -this.height;
+            
+            this.speed = 4;
+            
+            
+            this.render = function()
+            {
+                context.fillStyle = "rgba(255, 255, 255 , 1)"; //green
+                context.beginPath();
+                context.arc(this.x,this.y,40,0,2*Math.PI);
+                context.fill();
+                
+            }
+            
+            this.move = function()
+            {
+                this.y += this.speed;
+                
+                if(this.y> height)
+                {
+                    //remove bamboo from array
+                    score++;
+                    return true;
+                    
+                }
+            }
+            
+        }
+        var astroids = [];
+        
+        //draws all the objects
+        var render = function()
+        {
+            
+            context.fillStyle = "rgba(0, 0,0 ,1)";
+            context.fillRect(0,0, width, height);
+            
+            context.fillStyle = "rgba(255, 255,255 ,1)";
+            context.font = "20px Georgia";
+            context.fillText("Score: " + score, 10, 25);
+            
+            
+            p.render();
+            for(i= 0; i < astroids.length; i++)
+            {
+                
+                if(astroids[i] != -1)
+                {
+                    astroids[i].render();
+                }
+                
+            }
+            //console.log('render was called');
+            
+            //context.fillStyle = "rgba(0, 128, 0 ,1)"; //green
+            //context.fillRect(0, 0, 700, 700);
+            
+            //console.log(context); 
+        }
+        
+        
+        var update = function()
+        {
+            
+            addAstroid();
+            p.move();
+            
+            for (i = 0; i< astroids.length; i++)
+            {
+                if(astroids[i] != -1)
+                {
+                    if(astroids[i].move())
+                    {
+                        astroids[i] = -1;
+                    }
+                }
+            }
+            
+            
+        }
+        
+        var count = 0;
+        var limit = 25;
+        var addAstroid = function()
+        {
+            count++;
+            
+            if(count == limit)
+            {
+                count = 0;
+                
+                var bnew = true;
+                
+                for(i = 0; i < astroids.length; i++)
+                {
+                    if(astroids[i] == -1)
+                    {
+                        astroids[i] = new Astroid();
+                        bnew = false;
+                    }
+                }
+                
+                if(bnew)
+                {
+                   astroids.push(new Astroid()); 
+                }
+                
+                
+                
+                if(limit > 10)
+                {
+                    limit --;
+                }
+            }
+        }
+        
+        var sent;
+        var tic = function()
+        {
+            //console.log('tic was called');
+            
+            if(alive)
+            {
+                update();
+                render();
+            }
+            else
+            {
+                if(!sent)
+                {
+                    context.fillStyle = "rgba(0, 0,0 ,1)";
+                    context.fillRect(0,0, width, height);
+
+                    context.fillStyle = "rgba(255, 255,255 ,1)";
+                    context.font = "20px Georgia";
+                    context.fillText("You died with a score of: " + score, 250, 325);
+
+
+                    //document.body.innerHTML += '<form id="dynForm" action="insertScore.php" method="post"><input type="hidden" name="game_new_score" value=true><input type="hidden" name="game" value=1><input type="hidden" name="user_id_score" value=<?php echo $_SESSION['user_id']; ?>><input type="hidden" name="score_validate" value=' + score + '></form>';
+                    //document.getElementById("dynForm").submit();
+                    
+                    //sent = true;
+                }
+                
+            }
+            animate(tic);    
+        }
+        
+        window.addEventListener("keydown", function (event) 
+        {
+            if(event.keyCode >=37 && event.keyCode <=40)
+            {
+                p.facing = event.keyCode;
+            }
+
+            keysDown[event.keyCode] = true;
+        });
+
+        window.addEventListener("keyup", function (event) 
+        {
+            delete keysDown[event.keyCode];
+        });
+        //tic();
+        animate(tic);
+        
+    }
+    
+</script>
+<div><canvas id="canvas" width="700" height="700"></canvas></div>
+<div><input type="submit" name="play" value="Play Game" onclick="this.blur();playBF()"/></div>
