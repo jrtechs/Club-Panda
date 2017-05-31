@@ -34,9 +34,9 @@
         
         var canvas = document.getElementById("canvas");
         
-        var width = 700;
+        var width = 800;
         
-        var height = 700;
+        var height = 800;
         
         canvas.style.textAligh = 'center';
         
@@ -66,8 +66,8 @@
         
         var Player = function(x,y)
         {
-            this.x = 350
-            this.y = 650;
+            this.x = width/2;
+            this.y = height/2;
             
             this.width = 10;
             this.height = 10;
@@ -144,38 +144,67 @@
         var Astroid = function(size)
         {
             
-            this.width = 25;
-            this.height = 25;
+            this.width = 15;
+            this.height = 15;
             
-            this.dir = getRandomIntInclusive(0, 360);
+            this.dir = 2 * Math.PI * Math.random()
             
             this.size = size;
             
+            var temp = getRandomIntInclusive(0, width);
+            var temp2 = getRandomIntInclusive(1, 4);
             
-            this.x = getRandomIntInclusive(0, width);
-            this.y = -this.height;
+            if(temp2 == 1)
+            {
+                this.x = temp;
+                this.y = 0;
+            }
+            else if(temp2 == 2)
+            {
+                this.x = width;
+                this.y = temp;
+            }
+            else if(temp2 == 3)
+            {
+                this.y = height;
+                this.x = temp;
+                
+            }
+            else
+            {
+                this.y = temp;
+                this.x = 0;
+                
+            }
             
-            this.speed = 4;
+            this.speed = 2;
             
             
             this.render = function()
             {
                 context.fillStyle = "rgba(255, 255, 255 , 1)"; //green
                 context.beginPath();
-                context.arc(this.x,this.y,40,0,2*Math.PI);
+                context.arc(this.x,this.y,this.width,0,2*Math.PI);
                 context.fill();
                 
             }
             
             this.move = function()
             {
-                this.y += this.speed;
+                this.y += this.speed * Math.sin(this.dir);
+                this.x += this.speed *Math.cos(this.dir);
                 
+                //collision
                 if(this.y> height)
                 {
                     //remove bamboo from array
                     score++;
                     return true;
+                    
+                }
+                
+                if()
+                {
                     
                 }
             }
