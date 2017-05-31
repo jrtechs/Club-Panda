@@ -63,6 +63,48 @@
         
         
         //objects
+        //
+        //bullet class
+        var Bullet = function(dir, x, y)
+        {
+            console.log(dir + " " + x + " " + y);
+            
+            this.dir = dir;
+            
+            this.x = x;
+            
+            this.y = y;
+            
+            this.speed = 5;
+            
+            this.width = 10;
+            this.height =10;
+            
+            this.move = function()
+            {
+                
+                sonsole.log("move");
+                this.x += this.speed * Math.sin(this.dir);
+                
+                this.y += this.speed * Math.cos(this.dir);
+            }
+            
+            this.render = function()
+            {
+                context.fillStyle = "rgba(255, 255, 255 , 1)"; //green
+                context.beginPath();
+                context.arc(this.x,this.y,this.width,0,2*Math.PI);
+                context.fill();
+                console.log(this.x);
+                
+            }
+            
+        }
+        //array of bullets
+        var bullets = [];
+        
+        bullets.push(new Bullet(Math.PI, 100, 100));
+        
         
         var Player = function(x,y)
         {
@@ -74,34 +116,55 @@
             
             this.speed = 4;
             
-            this.facing = 40;
+            this.dir = Math.PI;
             
-            this.updateDirection = function(key)
-            {
-                facing = key;
-            }
+           
             
             this.render = function()
             {
                 context.fillStyle = "rgba(255, 255, 255, 1)"; //white
                 context.fillRect(this.x, this.y, this.width, this.height);
                 
+                
             }
             
             this.move = function()
             {
+                
+
+                
                 for (var key in keysDown)
                 {
                     var value = Number(key);
                     
                     if(value == 37) //left
                     {
-                        this.x = this.x - this.speed;
+                        //one degree
+                        this.dir += Math.PI / 360; 
                     }
                     else if(value == 39)
                     {
-                        this.x = this.x + this.speed;
+                        //one degree
+                        this.dir -= Math.PI / 360; 
                     }
+                    else if(value == 38) // up
+                    {
+                        this.x += this.speed * Math.sin(this.dir);
+                
+                        this.y += this.speed * Math.cos(this.dir);
+                    }
+                    else if(value == 40) //down
+                    {
+                        this.x -= this.speed * Math.sin(this.dir);
+                
+                        this.y -= this.speed * Math.cos(this.dir);
+                    }
+                    else if(value == 32) //shoot
+                    {
+                        this.shoot();
+                       
+                    }
+                    
                     
                 }
                 
@@ -128,16 +191,49 @@
                 {
                     this.x += this.speed;
                 }
-                else if(this.x > width)
+                else if(this.x > width- this.width)
                 {
                     this.x -= this.speed;
                 }
                 
+                if(this.y < 0)
+                {
+                    this.y += this.speed;
+                    
+                }
+                else if(this.y > height)
+                {
+                    this.y -= this.speed;
+                    
+                }
+                
+            }
+            
+            this.shoot = function()
+            {
+                var dimmed = false;
+                
+                for(i = 0; i> bullets.size; i++)
+                {
+                    if(bullets[i] == -1)
+                    {
+                        dimmed = true;
+                        bullets[i] = new Bullet(this.dir, this.x, this.y);
+                    }
+                }
+                
+                if(dimmed == false)
+                {
+                    bullets.push(new Bullet(this.dir, this.x, this.y));
+                }
+                
             }
         }
-        
         //player object
         var p = new Player(350, 850);
+        
+
+        
         
         
         //object that falls from the sky
@@ -202,11 +298,7 @@
                     return true;
                     
                 }
-                
-                if()
-                {
-                    
-                }
+
             }
             
         }
@@ -234,6 +326,14 @@
                 }
                 
             }
+            
+            for (i = 0; i < bullets.lenght; i++)
+            {
+                if(bullets[i] != -1)
+                {
+                    bullets[i].render();
+                }
+            }
             //console.log('render was called');
             
             //context.fillStyle = "rgba(0, 128, 0 ,1)"; //green
@@ -256,6 +356,17 @@
                     if(astroids[i].move())
                     {
                         astroids[i] = -1;
+                    }
+                }
+            }
+            console.log(bullets.lenght);
+            for (i = 0; i < bullets.lenght; i++)
+            {
+                if(bullets[i] != -1)
+                {
+                    if(bullets[i].move())
+                    {
+                        bullets[i] = -1;
                     }
                 }
             }
