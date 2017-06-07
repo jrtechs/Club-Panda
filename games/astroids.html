@@ -42,7 +42,7 @@
         
         var context = canvas.getContext('2d');
         
-        
+        var bullets = [];
         
         var keysDown = {};
         
@@ -67,7 +67,7 @@
         //bullet class
         var Bullet = function(dir, x, y)
         {
-            console.log(dir + " " + x + " " + y);
+            //console.log(dir + " " + x + " " + y);
             
             this.dir = dir;
             
@@ -83,7 +83,7 @@
             this.move = function()
             {
                 
-                sonsole.log("move");
+                //console.log("move");
                 this.x += this.speed * Math.sin(this.dir);
                 
                 this.y += this.speed * Math.cos(this.dir);
@@ -91,19 +91,19 @@
             
             this.render = function()
             {
-                context.fillStyle = "rgba(255, 255, 255 , 1)"; //green
+                context.fillStyle = "rgba(255, 0, 0 , 1)"; //green
                 context.beginPath();
                 context.arc(this.x,this.y,this.width,0,2*Math.PI);
                 context.fill();
-                console.log(this.x);
+                //console.log(this.x);
                 
             }
             
         }
         //array of bullets
-        var bullets = [];
         
-        bullets.push(new Bullet(Math.PI, 100, 100));
+        
+        //bullets[0] = new Bullet(Math.PI, 100, 100);
         
         
         var Player = function(x,y)
@@ -117,6 +117,8 @@
             this.speed = 4;
             
             this.dir = Math.PI;
+            
+            this.dirSpeed = 10;
             
            
             
@@ -139,13 +141,13 @@
                     
                     if(value == 37) //left
                     {
-                        //one degree
-                        this.dir += Math.PI / 360; 
+                        
+                        this.dir += this.dirSpeed * Math.PI / 360; 
                     }
                     else if(value == 39)
                     {
-                        //one degree
-                        this.dir -= Math.PI / 360; 
+                        //
+                        this.dir -= this.dirSpeed * Math.PI / 360; 
                     }
                     else if(value == 38) // up
                     {
@@ -213,7 +215,7 @@
             {
                 var dimmed = false;
                 
-                for(i = 0; i> bullets.size; i++)
+                for(i = 0; i> bullets.length; i++)
                 {
                     if(bullets[i] == -1)
                     {
@@ -327,7 +329,7 @@
                 
             }
             
-            for (i = 0; i < bullets.lenght; i++)
+            for (var i = bullets.length; i--; )
             {
                 if(bullets[i] != -1)
                 {
@@ -349,6 +351,27 @@
             addAstroid();
             p.move();
             
+            
+            var halp = bullets.lenght
+            
+            //console.log(halp);
+            //for (b = 0; b < bullets.lenght; b++)
+            //var b;
+            for (var i = bullets.length; i--; )
+            {
+                console.log("b");
+                if(bullets[i] != -1)
+                {
+                    
+                    if(bullets[i].move())
+                    {
+                        b = -1;
+                    }
+                }
+
+            }
+            
+            
             for (i = 0; i< astroids.length; i++)
             {
                 if(astroids[i] != -1)
@@ -359,17 +382,8 @@
                     }
                 }
             }
-            console.log(bullets.lenght);
-            for (i = 0; i < bullets.lenght; i++)
-            {
-                if(bullets[i] != -1)
-                {
-                    if(bullets[i].move())
-                    {
-                        bullets[i] = -1;
-                    }
-                }
-            }
+            
+
             
             
         }
