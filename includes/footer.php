@@ -39,7 +39,4 @@ function openNav() {
 
 </body>
 </html>
-<?php
-
-?>
 

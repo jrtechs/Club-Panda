@@ -23,16 +23,16 @@
         c.fillRect(0,0, canvas.width, canvas.height);
     };
     
-    
     //entire game
     function playBF()
     {
-        var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) 
+        var animate = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame || function (callback)
         {
             window.setTimeout(callback, 1000 / 60)
         };
-        
-        
+
         var canvas = document.getElementById("canvas");
         
         var width = 800;
@@ -121,54 +121,41 @@
             
             this.dirSpeed = 10;
             
-           
-            
+
             this.render = function()
             {
                 context.fillStyle = "rgba(255, 255, 255, 1)"; //white
                 context.fillRect(this.x, this.y, this.width, this.height);
-                
-                
             }
             
             this.move = function()
             {
-                
-
-                
                 for (var key in keysDown)
                 {
                     var value = Number(key);
                     
                     if(value == 37) //left
                     {
-                        
                         this.dir += this.dirSpeed * Math.PI / 360; 
                     }
                     else if(value == 39)
                     {
-                        //
                         this.dir -= this.dirSpeed * Math.PI / 360; 
                     }
                     else if(value == 38) // up
                     {
                         this.x += this.speed * Math.sin(this.dir);
-                
                         this.y += this.speed * Math.cos(this.dir);
                     }
                     else if(value == 40) //down
                     {
                         this.x -= this.speed * Math.sin(this.dir);
-                
                         this.y -= this.speed * Math.cos(this.dir);
                     }
                     else if(value == 32) //shoot
                     {
                         this.shoot();
-                       
                     }
-                    
-                    
                 }
                 
                 //collisions
@@ -178,12 +165,15 @@
                     {
                         bb = astroids[i];
                         //if(Math.abs(bb.x - p.x) <= bb.width)
-                        if(p.x > bb.x && p.x < bb.x + bb.width || p.x + p.width < bb.x + bb.width && p.x + p.width > bb.x)
+                        if(p.x > bb.x && p.x < bb.x + bb.width ||
+                            p.x + p.width < bb.x + bb.width && p.x + p.width
+                            > bb.x)
                         {
-                            if(p.y > bb.y && p.y < bb.y + bb.height || p.y + p.height < bb.y + bb.height && p.y + p.height > bb.y)
+                            if(p.y > bb.y && p.y < bb.y + bb.height ||
+                                p.y + p.height < bb.y + bb.height &&
+                                p.y + p.height > bb.y)
                             {
                                 alive = false;
-                                
                                 bb = -1;
                             }
                         }
@@ -191,25 +181,14 @@
                 }
                 
                 if(this.x < 0)
-                {
                     this.x += this.speed;
-                }
                 else if(this.x > width- this.width)
-                {
                     this.x -= this.speed;
-                }
-                
+
                 if(this.y < 0)
-                {
                     this.y += this.speed;
-                    
-                }
                 else if(this.y > height)
-                {
                     this.y -= this.speed;
-                    
-                }
-                
             }
             
             this.shoot = function()
@@ -224,21 +203,13 @@
                         bullets[i] = new Bullet(this.dir, this.x, this.y);
                     }
                 }
-                
                 if(dimmed == false)
-                {
                     bullets.push(new Bullet(this.dir, this.x, this.y));
-                }
-                
             }
         }
         //player object
         var p = new Player(350, 850);
-        
 
-        
-        
-        
         //object that falls from the sky
         var Astroid = function(size)
         {
@@ -267,18 +238,15 @@
             {
                 this.y = height;
                 this.x = temp;
-                
             }
             else
             {
                 this.y = temp;
                 this.x = 0;
-                
             }
             
             this.speed = 2;
-            
-            
+
             this.render = function()
             {
                 context.fillStyle = "rgba(255, 255, 255 , 1)"; //green
@@ -299,61 +267,38 @@
                     //remove bamboo from array
                     score++;
                     return true;
-                    
                 }
-
             }
-            
         }
         var astroids = [];
         
         //draws all the objects
         var render = function()
         {
-            
             context.fillStyle = "rgba(0, 0,0 ,1)";
             context.fillRect(0,0, width, height);
             
             context.fillStyle = "rgba(255, 255,255 ,1)";
             context.font = "20px Georgia";
             context.fillText("Score: " + score, 10, 25);
-            
-            
+
             p.render();
             for(i= 0; i < astroids.length; i++)
-            {
-                
                 if(astroids[i] != -1)
-                {
                     astroids[i].render();
-                }
-                
-            }
             
             for (var i = bullets.length; i--; )
-            {
                 if(bullets[i] != -1)
-                {
                     bullets[i].render();
-                }
-            }
-            //console.log('render was called');
-            
-            //context.fillStyle = "rgba(0, 128, 0 ,1)"; //green
-            //context.fillRect(0, 0, 700, 700);
-            
-            //console.log(context); 
         }
 
         var update = function()
         {
-            
             addAstroid();
             p.move();
-            
-            
+
             var halp = bullets.lenght
-            
+
             //console.log(halp);
             //for (b = 0; b < bullets.lenght; b++)
             //var b;
@@ -371,22 +316,11 @@
                 }
 
             }
-            
-            
-            for (i = 0; i< astroids.length; i++)
-            {
-                if(astroids[i] != -1)
-                {
-                    if(astroids[i].move())
-                    {
-                        astroids[i] = -1;
-                    }
-                }
-            }
-            
 
-            
-            
+            for (i = 0; i< astroids.length; i++)
+                if(astroids[i] != -1)
+                    if(astroids[i].move())
+                        astroids[i] = -1;
         }
         
         var count = 0;
@@ -415,8 +349,6 @@
                    astroids.push(new Astroid()); 
                 }
                 
-                
-                
                 if(limit > 10)
                 {
                     limit --;
@@ -443,15 +375,9 @@
 
                     context.fillStyle = "rgba(255, 255,255 ,1)";
                     context.font = "20px Georgia";
-                    context.fillText("You died with a score of: " + score, 250, 325);
-
-
-                    //document.body.innerHTML += '<form id="dynForm" action="insertScore.php" method="post"><input type="hidden" name="game_new_score" value=true><input type="hidden" name="game" value=1><input type="hidden" name="user_id_score" value=<?php echo $_SESSION['user_id']; ?>><input type="hidden" name="score_validate" value=' + score + '></form>';
-                    //document.getElementById("dynForm").submit();
-                    
-                    //sent = true;
+                    context.fillText("You died with a score of: " +
+                        score, 250, 325);
                 }
-                
             }
             animate(tic);    
         }
@@ -472,9 +398,9 @@
         });
         //tic();
         animate(tic);
-        
     }
     
 </script>
 <div><canvas id="canvas" width="700" height="700"></canvas></div>
-<div><input type="submit" name="play" value="Play Game" onclick="this.blur();playBF()"/></div>
+<div><input type="submit" name="play" value="Play Game" onclick="this.blur();
+playBF()"/></div>
