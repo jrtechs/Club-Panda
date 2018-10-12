@@ -8,7 +8,7 @@ Repo.js
 [![npm](https://img.shields.io/npm/v/repo.js.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/repo.js)
 [![npm](https://img.shields.io/npm/dt/repo.js.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/repo.js)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://darcyclarke.mit-license.org)
-[![Join the chat at https://gitter.im/darcyclarke/Repo.js](http://img.shields.io/:Gitter-Join Chat-orange.svg?style=flat-square)](https://gitter.im/darcyclarke/Repo.js)
+[![Join the chat at https://gitter.im/darcyClarke/Repo.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/darcyClarke/Repo.js)
 
 Repo.js is a jQuery plugin that lets you easily embed a Github repo onto your site. This is great for other plugin or library authors that want to showcase the contents of a repo on their project pages. 
 
