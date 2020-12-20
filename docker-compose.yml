@@ -1,0 +1,36 @@
+version: '3'
+
+# how to access sql when running -- used to import database into docker container
+# mysql --port=3306 --host=127.0.0.1 -u root --password=password
+services:
+  clubdb:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - "./db:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+
+# Php-fpm configuration
+  php:
+    build: ./php_docker/
+    volumes:
+      - .:/app/public
+    links:
+      - clubdb
+
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app/public
+    links:
+      - php
+      - clubdb
+    depends_on:
+      - php
+      - clubdb

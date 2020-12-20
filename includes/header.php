@@ -7,11 +7,11 @@ session_start();
 ob_start();
 if($dir == 2)
 {
-    require_once("../../club_connect.php");
+    require_once("../club_connect.php");
 }
 else
 {
-    require_once("../club_connect.php");
+    require_once("club_connect.php");
 }
 
 
