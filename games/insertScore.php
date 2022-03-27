@@ -2,7 +2,7 @@
 
 //5-16-17
 
-include_once 'club_connect.php';
+include_once '../club_connect.php';
 
 if(isset($_POST['game_new_score']))
 {

@@ -5,13 +5,18 @@ $admin = false;
 
 session_start();
 ob_start();
+
+echo getcwd();
+echo "$dir";
 if($dir == 2)
 {
     require_once("../club_connect.php");
+    // require_once('insertScore.php');
 }
 else
 {
-    require_once("club_connect.php");
+    require_once("./club_connect.php");
+    // require_once('./games/insertScore.php');
 }
 
 
@@ -34,12 +39,6 @@ if((md5($_SERVER['HTTP_USERAGENT'] . 'salt')) == ($_SESSION['agent']) &&
     }
 }
 
-try
-{
-    include('games/insertScore.php');
-}
-catch (Exception $ex)
-{}
 
 echo '<!DOCTYPE html>
 <html>
@@ -90,7 +89,6 @@ if($dir == 2)
         <div class="w3-dropdown-content w3-card-4 w3-bar-block">
           <a href="bamboofield.php" class="w3-bar-item w3-button">Bamboo Field</a>
           <a href="zombiePanda.php" class="w3-bar-item w3-button">Zombie Pandas</a>
-          <a href="#" class="w3-bar-item w3-button">Link</a>
         </div>
       </div>
      </div>
@@ -149,7 +147,6 @@ else
     <div class="w3-dropdown-content w3-card-4 w3-bar-block">
       <a href="games/bamboofield.php" class="w3-bar-item w3-button">Bamboo Field</a>
       <a href="games/zombiePanda.php" class="w3-bar-item w3-button">Zombie Pandas</a>
-      <a href="#" class="w3-bar-item w3-button">Link</a>
     </div>
   </div>
  </div>
