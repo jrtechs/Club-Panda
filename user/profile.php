@@ -19,13 +19,13 @@ if(isset($_POST['log_in']))
 {
     //echo 'Login procces';
     if(isset($_POST['user_name']))
-        $i_username = @mysqli_real_escape_string($dbc,
+        $i_username = $db->escapeString(
             trim($_POST['user_name']));
     else
         $errors['User Name'] = 'You need to enter a user name!';
 
     if(isset($_POST['password']))
-        $i_password = @mysqli_real_escape_string($dbc,
+        $i_password = $db->escapeString(
             trim($_POST['password']));
     else
         $errors['password'] = "You need to enter a password!";
@@ -35,42 +35,30 @@ if(isset($_POST['log_in']))
     {
         //valid username
         $q3 = "select * from users where user_name='$i_username'";
-        //echo $q3;
-        $r3 = mysqli_query($dbc, $q3);
+        $r3 = $db->querySingle($q3, true);
 
-        if(@mysqli_num_rows($r3) == 1)
+        if($r3) //not empty
         {
-            //echo 'das good';
-            $firstName = "";
-            while($row = mysqli_fetch_array($r3))
-                $firstName = $row['first_name'];
-
+            $firstName = $r3['first_name'];
 
             $q2 = "select * from users where user_name = 
                   '$i_username' and pass ='"  . SHA1($i_password
                     . $firstName) .   "'";
 
-
-            $r2 = mysqli_query($dbc, $q2);
-
-            if(@mysqli_num_rows($r2) == 1)
+            $r2 = $db->querySingle($q2, true);
+            if($r2)
             {
-                while($row = mysqli_fetch_array($r2))
-                {
+                $_SESSION['use'] = true;
+                $_SESSION['fname'] = $firstName;
+                $_SESSION['user_id'] = $r2['user_id'];
+                $_SESSION['username'] = $r2['user_name'];
+                $_SESSION['agent'] = md5($_SERVER['HTTP_USERAGENT'] . 'salt');
 
-                    $_SESSION['use'] = true;
-                    $_SESSION['fname'] = $firstName;
-                    $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['username'] = $row['user_name'];
-                    $_SESSION['agent'] = md5($_SERVER['HTTP_USERAGENT']
-                        . 'salt');
+                if($dir == 2)
+                    header("Location: ../index.php");
+                else
+                    header("Location: index.php");
 
-                    if($dir == 2)
-                        header("Location: ../index.php");
-                    else
-                        header("Location: index.php");
-
-                }
             }
             else
             {

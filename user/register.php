@@ -7,17 +7,17 @@ if(!$loggedIn)
     if(isset($_POST['newUser']))
     {
 
-        $i_first = mysqli_real_escape_string($dbc, trim($_POST['first']));
-        $i_last = mysqli_real_escape_string($dbc, trim($_POST['last']));
-        $i_pass = mysqli_real_escape_string($dbc, trim($_POST['pass']));
-        $i_user = mysqli_real_escape_string($dbc, trim($_POST['user_name']));
+        $i_first = $db->escapeString(trim($_POST['first']));
+        $i_last = $db->escapeString(trim($_POST['last']));
+        $i_pass = $db->escapeString(trim($_POST['pass']));
+        $i_user = $db->escapeString(trim($_POST['user_name']));
 
         if($i_first && $i_last && $i_pass && $i_user)
         {
             $q = "select user_id from users where user_name='$i_user'";
-            $r = mysqli_query($dbc, $q);
+            $r = $db->query($q);
 
-            if(@mysqli_num_rows($r) == 1)
+            if($r->numColumns() && $r->columnType(0) != SQLITE3_NULL)
             {
                 $errors['name'] = "That user name is already in use.";
             }
@@ -44,9 +44,8 @@ if(!$loggedIn)
 
             $q = "insert into users(first_name, last_name, user_name, pass, 
                     registration_date, admin) values ('$i_first', '$i_last' 
-                    , '$i_user', '$passcom', now(), false)";
-            $r = mysqli_query($dbc, $q);
-
+                    , '$i_user', '$passcom', date('now'), false)";
+            $r = $db->query($q);
             header("Location: index.php");
 
         }

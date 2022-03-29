@@ -1,10 +1,3 @@
 <?php
-    try
-    {
-        $dbc = mysqli_connect("clubdb", "root", 'password', "clubpanda");
-    } catch (Exception $ex) 
-    {
-        echo 'Bad things just happened';
-    }
-    
+    $db = new SQLite3("/app/public/clubpanda.sqlite", SQLITE3_OPEN_READWRITE);
 ?>

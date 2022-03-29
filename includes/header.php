@@ -27,14 +27,11 @@ if((md5($_SERVER['HTTP_USERAGENT'] . 'salt')) == ($_SESSION['agent']) &&
 
     $q = "select admin from users where user_name='" .
         $_SESSION['username'] . "'";
-    $r = mysqli_query($dbc, $q);
+    $r = $db->querySingle($q, true);
 
-    if(@mysqli_num_rows($r) == 1)
+    if($r)
     {
-        while($row = mysqli_fetch_array($r))
-            $checka = $row['admin'];
-
-        if($checka)
+        if($r['admin'])
             $admin = true;
     }
 }
