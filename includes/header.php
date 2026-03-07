@@ -6,8 +6,16 @@ $admin = false;
 session_start();
 ob_start();
 
-echo getcwd();
-echo "$dir";
+// Determine directory depth by checking if club_connect.php exists in current or parent directory
+if(file_exists("./club_connect.php"))
+{
+    $dir = 1;
+}
+else
+{
+    $dir = 2;
+}
+
 if($dir == 2)
 {
     require_once("../club_connect.php");
@@ -20,7 +28,8 @@ else
 }
 
 
-if((md5($_SERVER['HTTP_USERAGENT'] . 'salt')) == ($_SESSION['agent']) &&
+if(isset($_SERVER['HTTP_USERAGENT']) && isset($_SESSION['agent']) && isset($_SESSION['use']) &&
+    md5($_SERVER['HTTP_USERAGENT'] . 'salt') == $_SESSION['agent'] &&
     $_SESSION['use'] == true)
 {
     $loggedIn = true;

@@ -144,6 +144,8 @@ function playZP()
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    var zombieBaseSpeed = 1;
+
     //zombie
     var Zombie = function(x,y)
     {
@@ -151,7 +153,7 @@ function playZP()
         this.y = y;
         this.width = 25;
         this.height = 25;
-        this.speed = 3;
+        this.speed = zombieBaseSpeed;
 
         var side = getRandomIntInclusive(0,3);
         var mid = getRandomIntInclusive(0,700);
@@ -348,7 +350,7 @@ function playZP()
                     '<input type="hidden" name="game_new_score" ' +
                     'value=true><input type="hidden" name="game" value=2>' +
                     '<input type="hidden" name="user_id_score" value=' +
-                    '<?php echo $_SESSION['user_id']; ?>><input ' +
+                    '<?php echo isset($_SESSION["user_id"]) ? (int)$_SESSION["user_id"] : 0; ?>><input ' +
             'type="hidden" name="score_validate" value=' + score + '>' +
             '</form>';
                 document.getElementById("dynForm").submit();

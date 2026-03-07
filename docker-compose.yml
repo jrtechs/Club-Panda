@@ -1,20 +1,24 @@
-version: '3'
 
 # Php-fpm configuration
-  php:
+services:
+  php-panda:
     build: ./php_docker/
     volumes:
       - .:/app/public
-    links:
-      - clubdb
+    networks:
+      - panda-net
 
-  web:
+  web-panda:
     build: .
     ports:
-      - "8080:80"
+      - "5000:80"
     volumes:
       - .:/app/public
-    links:
-      - php
     depends_on:
-      - php
+      - php-panda
+    networks:
+      - panda-net
+
+networks:
+  panda-net:
+    driver: bridge

@@ -1,4 +1,4 @@
-FROM nginx:1.17.8-alpine
+FROM nginx:1.29-alpine
 
 # Copy the public directory
 COPY . /app/public/
@@ -7,4 +7,3 @@ COPY . /app/public/
 COPY ./site.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-EXPOSE 8080

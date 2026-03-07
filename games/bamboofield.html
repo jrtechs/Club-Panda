@@ -243,9 +243,8 @@ function playBF()
                     'action="insertScore.php" method="post"><input ' +
                     'type="hidden" name="game_new_score" value=true>' +
                     '<input type="hidden" name="game" value=1><input ' +
-                    'type="hidden" name="user_id_score" ' +
-                    'value=<?php echo $_SESSION['user_id']; ?>><input ' +
-            'type="hidden" name="score_validate" value=' + score + '></form>';
+                    'type="hidden" name="user_id_score" value=<?php echo isset($_SESSION["user_id"]) ? (int)$_SESSION["user_id"] : 0; ?>><input ' +
+                    'type="hidden" name="score_validate" value=' + score + '></form>';
                 document.getElementById("dynForm").submit();
 
                 sent = true;

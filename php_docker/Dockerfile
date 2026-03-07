@@ -1,9 +1,8 @@
-FROM php:7.4.3-fpm-alpine3.11
+FROM php:8.1-fpm-alpine
 
 RUN apk update \
     && apk add sqlite \
-    && apk add socat \
-    && apk add php-sqlite3
+    && apk add socat
 
 # Copy the php config file
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
