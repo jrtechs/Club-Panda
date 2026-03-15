@@ -19,9 +19,11 @@ A simple website with some JavaScript Games
 
 ### SQL Lite DB Initialization
 
+Store the database one directory above the repo so it is outside the nginx web root. In Docker, only that single file is mounted into the PHP container.
+
 
 ```sql
-sqlite3 clubpanda.sqlite
+sqlite3 ../clubpanda.sqlite
 
 CREATE TABLE scores (
     score_id INTEGER PRIMARY KEY AUTOINCREMENT,

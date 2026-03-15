@@ -62,7 +62,7 @@ if($dir == 2)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">';
     echo '<link rel="stylesheet" href="../includes/w3.css">'
-    . '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" >    
+    . '<script src="https://code.jquery.com/jquery-3.7.1.min.js" >    
     </script>';
     echo '<link rel="stylesheet" 
         href="https://www.w3schools.com/lib/w3-theme-black.css">
@@ -123,7 +123,7 @@ else
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">';
     echo '<link rel="stylesheet" href="includes/w3.css">'
-    . '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" >    </script>';
+    . '<script src="https://code.jquery.com/jquery-3.7.1.min.js" >    </script>';
         echo '<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 

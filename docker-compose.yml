@@ -3,8 +3,11 @@
 services:
   php-panda:
     build: ./php_docker/
+    environment:
+      CLUB_PANDA_DB_PATH: /app/data/clubpanda.sqlite
     volumes:
       - .:/app/public
+      - ../clubpanda.sqlite:/app/data/clubpanda.sqlite
     networks:
       - panda-net
 
